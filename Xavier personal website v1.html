@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xavier Chen | Investing Research & Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161e;
+      --surface2: #1a1e29;
+      --border: #252a38;
+      --accent: #4f8ef7;
+      --accent2: #7c5fe6;
+      --text: #e8ecf4;
+      --muted: #8892a4;
+      --tag-bg: #1e2535;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13,15,20,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 1.8rem; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.88rem;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      padding: 140px 2rem 80px;
+      max-width: 900px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 1.2rem;
+    }
+    .hero-badge {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.25);
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700; line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted); max-width: 620px;
+      font-weight: 400;
+    }
+    .hero-meta {
+      display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.3rem;
+    }
+    .hero-meta span {
+      font-size: 0.82rem; color: var(--muted);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .hero-meta span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+    .hero-cta {
+      display: flex; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap;
+    }
+    .btn {
+      padding: 10px 22px; border-radius: 8px; font-size: 0.88rem;
+      font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; border: none;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+    /* SECTION */
+    section {
+      max-width: 900px; margin: 0 auto;
+      padding: 0 2rem 80px;
+    }
+    .section-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;
+    }
+    .section-title { font-size: 1.1rem; font-weight: 600; }
+    .section-link {
+      font-size: 0.82rem; color: var(--accent); text-decoration: none;
+      font-weight: 500;
+    }
+    .section-link:hover { text-decoration: underline; }
+
+    /* ABOUT CARD */
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.8rem 2rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .about-left p { color: var(--muted); font-size: 0.92rem; line-height: 1.75; }
+    .about-right { display: flex; flex-direction: column; gap: 1rem; }
+    .stat-row { display: flex; gap: 1rem; }
+    .stat {
+      flex: 1; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 1rem; text-align: center;
+    }
+    .stat-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.5rem; }
+    .skill-tag {
+      font-size: 0.75rem; font-weight: 500;
+      background: var(--tag-bg); color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 4px 10px; border-radius: 6px;
+    }
+
+    /* ARTICLES GRID */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+    .article-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .article-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(79,142,247,0.1);
+    }
+    .article-tag {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; padding: 3px 9px; border-radius: 5px;
+      display: inline-block; width: fit-content;
+    }
+    .tag-macro { background: rgba(79,142,247,0.12); color: #6ba3fa; }
+    .tag-equity { background: rgba(124,95,230,0.12); color: #a08af7; }
+    .tag-rates  { background: rgba(52,199,143,0.12); color: #43c89a; }
+    .tag-sector { background: rgba(245,158,11,0.12); color: #f6a832; }
+    .tag-quant  { background: rgba(236,72,153,0.12); color: #f472b6; }
+    .article-title {
+      font-size: 0.97rem; font-weight: 600; line-height: 1.45;
+    }
+    .article-excerpt { font-size: 0.83rem; color: var(--muted); line-height: 1.6; flex: 1; }
+    .article-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem;
+    }
+    .read-arrow { color: var(--accent); font-size: 0.82rem; font-weight: 600; }
+
+    /* POSTS FEED */
+    .posts-list { display: flex; flex-direction: column; gap: 1rem; }
+    .post-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      text-decoration: none; color: inherit;
+      transition: border-color 0.2s;
+    }
+    .post-item:hover { border-color: var(--accent); }
+    .post-text { font-size: 0.9rem; color: var(--text); line-height: 1.65; }
+    .post-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.7rem; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8rem; color: var(--muted);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .about-card { grid-template-columns: 1fr; }
+      .articles-grid { grid-template-columns: 1fr; }
+      nav .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Xavier Chen</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#articles">Articles</a>
+    <a href="#posts">Posts</a>
+    <a href="https://x.com/ChenXiaoCapital" target="_blank">X / Twitter</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-badge">Investing Research</span>
+  <h1>Xavier Chen<br/><span>ChenXiao Capital</span></h1>
+  <p class="hero-sub">
+    Group FP&amp;A analyst in Hong Kong. Incoming Rutgers Master of Financial Analysis student (2026). Researching US equities, macro, and quantitative frameworks as a disciplined part-time investor.
+  </p>
+  <div class="hero-meta">
+    <span>Hong Kong, New Territories</span>
+    <span>US Equity Markets</span>
+    <span>Rutgers MFA 2026</span>
+    <span>4.5 Years Finance</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="https://x.com/ChenXiaoCapital/articles" target="_blank">
+      &#9654; Read All Articles
+    </a>
+    <a class="btn btn-outline" href="https://x.com/ChenXiaoCapital" target="_blank">
+      Follow on X
+    </a>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-title">About</span>
+  </div>
+  <div class="about-card">
+    <div class="about-left">
+      <p>
+        I am a finance professional with 4.5 years across external audit, in-house accounting, and Group FP&amp;A at a Hong Kong-listed company. I invest in the US equity market with a focus on bottom-up fundamental analysis, macro awareness, and systematic valuation frameworks.
+      </p>
+      <br/>
+      <p>
+        I am joining the Rutgers Master of Financial Analysis program in September 2026, with a goal of transitioning into an investment role on the US East Coast. My writing on X documents my investment process, thesis construction, and market observations in real time.
+      </p>
+    </div>
+    <div class="about-right">
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">4.5</div>
+          <div class="stat-label">Years in Finance</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">MFA</div>
+          <div class="stat-label">Rutgers 2026-27</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">US</div>
+          <div class="stat-label">Market Focus</div>
+        </div>
+      </div>
+      <div class="skills">
+        <span class="skill-tag">Equity Research</span>
+        <span class="skill-tag">FP&amp;A</span>
+        <span class="skill-tag">DCF / Valuation</span>
+        <span class="skill-tag">Macro Analysis</span>
+        <span class="skill-tag">Financial Modelling</span>
+        <span class="skill-tag">C++ (QuantNet)</span>
+        <span class="skill-tag">US Equities</span>
+        <span class="skill-tag">HK Listed Companies</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section id="articles">
+  <div class="section-header">
+    <span class="section-title">Long-Form Articles</span>
+    <a class="section-link" href="https://x.com/ChenXiaoCapital/articles" target="_blank">View all on X &rarr;</a>
+  </div>
+  <div class="articles-grid">
+
+    <a class="article-card" href="https://x.com/ChenXiaoCapital/articles" target="_blank">
+      <span class="article-tag tag-macro">Macro</span>
+      <div class="article-title">Macro Frameworks for US Equity Positioning</div>
+      <div class="article-excerpt">Examining how rate cycles, inflation regimes, and dollar strength historically shape sector rotation and portfolio construction.</div>
+      <div class="article-footer">
+        <span>ChenXiao Capital</span>
+        <span class="read-arrow">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://x.com/ChenXiaoCapital/articles" target="_blank">
+      <span class="article-tag tag-equity">Equity Research</span>
+      <div class="article-title">Bottom-Up Stock Analysis: Building a Conviction Framework</div>
+      <div class="article-excerpt">A walkthrough of how I evaluate businesses: quality of earnings, capital allocation history, and where price diverges from intrinsic value.</div>
+      <div class="article-footer">
+        <span>ChenXiao Capital</span>
+        <span class="read-arrow">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://x.com/ChenXiaoCapital/articles" target="_blank">
+      <span class="article-tag tag-rates">Rates &amp; Credit</span>
+      <div class="article-title">What the Yield Curve Is Actually Telling You</div>
+      <div class="article-excerpt">Moving beyond inversion headlines to understand how the term structure signals growth expectations and where dislocations appear.</div>
+      <div class="article-footer">
+        <span>ChenXiao Capital</span>
+        <span class="read-arrow">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://x.com/ChenXiaoCapital/articles" target="_blank">
+      <span class="article-tag tag-sector">Sector Deep Dive</span>
+      <div class="article-title">Technology Sector: Valuation Discipline in a High-Multiple World</div>
+      <div class="article-excerpt">How to apply rigorous FCF-based valuation to growth companies without anchoring to consensus or momentum narratives.</div>
+      <div class="article-footer">
+        <span>ChenXiao Capital</span>
+        <span class="read-arrow">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://x.com/ChenXiaoCapital/articles" target="_blank">
+      <span class="article-tag tag-quant">Quantitative</span>
+      <div class="article-title">Factor Investing: Signal, Noise, and the Limits of Back-Tests</div>
+      <div class="article-excerpt">A practical look at value, momentum, and quality factors and why live implementation almost always diverges from paper results.</div>
+      <div class="article-footer">
+        <span>ChenXiao Capital</span>
+        <span class="read-arrow">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="article-card" href="https://x.com/ChenXiaoCapital/articles" target="_blank">
+      <span class="article-tag tag-macro">FP&amp;A Perspective</span>
+      <div class="article-title">Reading Corporate Earnings Through an Operator's Lens</div>
+      <div class="article-excerpt">How hands-on FP&amp;A experience reshapes how I read earnings releases, management guidance, and variance analysis.</div>
+      <div class="article-footer">
+        <span>ChenXiao Capital</span>
+        <span class="read-arrow">Read &rarr;</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- POSTS FEED -->
+<section id="posts">
+  <div class="section-header">
+    <span class="section-title">Selected Posts on X</span>
+    <a class="section-link" href="https://x.com/ChenXiaoCapital" target="_blank">View profile &rarr;</a>
+  </div>
+  <div class="posts-list">
+    <a class="post-item" href="https://x.com/ChenXiaoCapital" target="_blank">
+      <div class="post-text">
+        Valuation should be obvious. When a category-leading compounder trades at 5x FCF because sentiment turns, that is not a thesis risk. That is the entry. The hard part is tolerating the time between being right and being rewarded.
+      </div>
+      <div class="post-meta">@ChenXiaoCapital</div>
+    </a>
+    <a class="post-item" href="https://x.com/ChenXiaoCapital" target="_blank">
+      <div class="post-text">
+        Most FP&amp;A analysts can read a P&amp;L faster than any sell-side junior. What they lack is the habit of connecting operating KPIs to equity price. That gap is worth closing deliberately.
+      </div>
+      <div class="post-meta">@ChenXiaoCapital</div>
+    </a>
+    <a class="post-item" href="https://x.com/ChenXiaoCapital" target="_blank">
+      <div class="post-text">
+        The Fed is not the market. The market is not the economy. Conflating the three is where most macro calls fall apart. Keep the layers separate, then look at where they intersect for asymmetric setups.
+      </div>
+      <div class="post-meta">@ChenXiaoCapital</div>
+    </a>
+    <a class="post-item" href="https://x.com/ChenXiaoCapital" target="_blank">
+      <div class="post-text">
+        Learning C++ for quantitative finance has changed how I think about pricing models. When you implement Black-Scholes from scratch, the assumptions stop being theoretical. You feel them in every edge case.
+      </div>
+      <div class="post-meta">@ChenXiaoCapital</div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    Xavier Chen &mdash; <a href="https://x.com/ChenXiaoCapital" target="_blank">@ChenXiaoCapital</a> on X
+    &nbsp;|&nbsp; Rutgers MFA 2026 &nbsp;|&nbsp; Hong Kong &rarr; US East Coast
+  </p>
+  <p style="margin-top:0.5rem;">
+    All articles and posts &rarr; <a href="https://x.com/ChenXiaoCapital/articles" target="_blank">x.com/ChenXiaoCapital/articles</a>
+  </p>
+</footer>
+
+</body>
+</html>
