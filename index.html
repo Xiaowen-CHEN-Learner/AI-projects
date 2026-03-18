@@ -4,21 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Xavier Chen | Investing Research & Analysis</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d0f14;
-      --surface: #13161e;
-      --surface2: #1a1e29;
-      --border: #252a38;
-      --accent: #4f8ef7;
-      --accent2: #7c5fe6;
-      --text: #e8ecf4;
-      --muted: #8892a4;
-      --tag-bg: #1e2535;
+      --bg: #ffffff;
+      --bg-soft: #f8f7f4;
+      --bg-hover: #f2f1ed;
+      --border: #e5e3dc;
+      --border-strong: #c8c5bb;
+      --navy: #1c3557;
+      --navy-light: #2a4a72;
+      --text: #111111;
+      --muted: #666666;
+      --muted-light: #999999;
+      --tag-china: #c0392b;
+      --tag-tic: #1a7a4a;
+      --tag-tech: #1c3557;
+      --tag-reflect: #7d4f1a;
+      --tag-quant: #5b2d8e;
+      --tag-github: #24292e;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -26,449 +35,834 @@
       color: var(--text);
       min-height: 100vh;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(13,15,20,0.85);
-      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-      height: 60px;
+      padding: 0 3rem;
+      height: 64px;
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-logo {
-      font-weight: 700; font-size: 1.05rem; letter-spacing: 0.02em;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-family: 'Lora', serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--navy);
+      letter-spacing: 0.01em;
+      text-decoration: none;
     }
-    .nav-links { display: flex; gap: 1.8rem; }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
     .nav-links a {
-      color: var(--muted); text-decoration: none; font-size: 0.88rem;
-      font-weight: 500; transition: color 0.2s;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0 1.1rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      letter-spacing: 0.02em;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover {
+      color: var(--navy);
+      border-bottom-color: var(--navy);
+    }
+    .nav-x-btn {
+      margin-left: 1rem;
+      padding: 7px 16px;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .nav-x-btn:hover { background: var(--navy-light); }
 
+    /* ── HERO ── */
     .hero {
-      padding: 140px 2rem 80px;
-      max-width: 900px; margin: 0 auto;
-      display: flex; flex-direction: column; align-items: flex-start; gap: 1.2rem;
+      padding: 130px 3rem 90px;
+      max-width: 1060px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
     }
-    .hero-badge {
-      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--accent);
-      background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.25);
-      padding: 4px 12px; border-radius: 20px;
+    .hero-left {}
+    .hero-eyebrow {
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 28px; height: 2px;
+      background: var(--navy);
     }
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 700; line-height: 1.2;
-      letter-spacing: -0.02em;
-    }
-    .hero h1 span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-family: 'Lora', serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 600;
+      line-height: 1.18;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 1.4rem;
     }
     .hero-sub {
-      font-size: 1.05rem; color: var(--muted); max-width: 620px;
-      font-weight: 400;
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 480px;
     }
-    .hero-meta {
-      display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.3rem;
-    }
-    .hero-meta span {
-      font-size: 0.82rem; color: var(--muted);
-      display: flex; align-items: center; gap: 5px;
-    }
-    .hero-meta span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
     .hero-cta {
-      display: flex; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap;
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
     }
     .btn {
-      padding: 10px 22px; border-radius: 8px; font-size: 0.88rem;
-      font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 22px;
+      border-radius: 5px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      letter-spacing: 0.03em;
     }
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; border: none;
+      background: var(--navy);
+      color: #fff;
+      border: 1.5px solid var(--navy);
     }
-    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--navy-light); border-color: var(--navy-light); }
     .btn-outline {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--navy);
+      border: 1.5px solid var(--navy);
     }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+    .btn-outline:hover { background: var(--bg-soft); }
 
+    .hero-right {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2rem;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .hero-stat {
+      background: var(--bg);
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .hero-stat-num {
+      font-family: 'Lora', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+    .hero-tags-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .hero-tag {
+      font-size: 0.73rem;
+      font-weight: 500;
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid var(--border-strong);
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+
+    /* ── DIVIDER ── */
+    .page-divider {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── SECTION ── */
     section {
-      max-width: 900px; margin: 0 auto;
-      padding: 0 2rem 80px;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
     }
     .section-header {
-      display: flex; justify-content: space-between; align-items: baseline;
-      margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--text);
     }
-    .section-title { font-size: 1.1rem; font-weight: 600; }
+    .section-title {
+      font-family: 'Lora', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+    }
     .section-link {
-      font-size: 0.82rem; color: var(--accent); text-decoration: none;
-      font-weight: 500;
+      font-size: 0.8rem;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
     .section-link:hover { text-decoration: underline; }
 
-    .about-card {
-      background: var(--surface);
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+    .about-body p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.85;
+    }
+    .about-body p + p { margin-top: 1.2rem; }
+
+    .about-sidebar {}
+    .sidebar-block {
+      border-top: 1px solid var(--border);
+      padding: 1.2rem 0;
+    }
+    .sidebar-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      margin-bottom: 0.6rem;
+    }
+    .sidebar-value {
+      font-size: 0.87rem;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* ── FILTER TABS ── */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 2rem;
+    }
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 3px;
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.18s;
+      font-family: 'Inter', sans-serif;
+    }
+    .filter-btn:hover { border-color: var(--navy); color: var(--navy); }
+    .filter-btn.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+
+    /* ── ARTICLE TABLE ── */
+    .articles-table { width: 100%; border-collapse: collapse; }
+    .articles-table thead tr {
+      border-bottom: 1px solid var(--border-strong);
+    }
+    .articles-table th {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      padding: 0 0 0.9rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .articles-table th:last-child { text-align: right; }
+    .articles-table th.col-cat  { width: 175px; }
+    .articles-table th.col-date { width: 110px; }
+    .articles-table th.col-loc  { width: 110px; }
+    .articles-table th.col-plat { width: 80px; }
+    .articles-table th.col-act  { width: 70px; }
+
+    .article-row {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .article-row:hover { background: var(--bg-hover); }
+    .article-row td {
+      padding: 1.15rem 0.5rem 1.15rem 0;
+      vertical-align: middle;
+    }
+    .article-row td:first-child { padding-left: 0; }
+    .article-row td:last-child { padding-right: 0; text-align: right; }
+
+    .cat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .cat-badge::before {
+      content: "";
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .cat-china    { color: var(--tag-china); }
+    .cat-china::before { background: var(--tag-china); }
+    .cat-tic      { color: var(--tag-tic); }
+    .cat-tic::before { background: var(--tag-tic); }
+    .cat-tech     { color: var(--tag-tech); }
+    .cat-tech::before { background: var(--tag-tech); }
+    .cat-reflect  { color: var(--tag-reflect); }
+    .cat-reflect::before { background: var(--tag-reflect); }
+    .cat-quant    { color: var(--tag-quant); }
+    .cat-quant::before { background: var(--tag-quant); }
+    .cat-github   { color: var(--tag-github); }
+    .cat-github::before { background: var(--tag-github); }
+
+    .article-title-cell {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.45;
+      max-width: 480px;
+    }
+    .article-row:hover .article-title-cell { color: var(--navy); }
+
+    .article-date {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .article-loc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .platform-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .quality-star {
+      display: inline-block;
+      font-size: 0.72rem;
+      color: #c9a227;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .read-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      text-transform: uppercase;
+      transition: gap 0.15s;
+    }
+    .read-btn:hover { gap: 8px; }
+    .read-btn .arrow { font-size: 0.85rem; }
+
+    /* ── POSTS ── */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5px;
+      background: var(--border);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.8rem 2rem;
-      display: grid; grid-template-columns: 1fr 1fr;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .post-card {
+      background: var(--bg);
+      padding: 1.8rem 1.6rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: background 0.15s;
+    }
+    .post-card:hover { background: var(--bg-soft); }
+    .post-card-quote {
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--text);
+      font-weight: 400;
+    }
+    .post-card-meta {
+      font-size: 0.73rem;
+      color: var(--muted-light);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .post-card-meta::before {
+      content: "";
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--navy);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 2px solid var(--text);
+      padding: 3rem;
+      max-width: 1060px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
       gap: 2rem;
     }
-    .about-left p { color: var(--muted); font-size: 0.92rem; line-height: 1.75; }
-    .about-right { display: flex; flex-direction: column; gap: 1rem; }
-    .stat-row { display: flex; gap: 1rem; }
-    .stat {
-      flex: 1; background: var(--surface2);
-      border: 1px solid var(--border); border-radius: 10px;
-      padding: 1rem; text-align: center;
+    .footer-left {}
+    .footer-name {
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
     }
-    .stat-num { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
-    .stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
-    .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.5rem; }
-    .skill-tag {
-      font-size: 0.75rem; font-weight: 500;
-      background: var(--tag-bg); color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 4px 10px; border-radius: 6px;
+    .footer-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.7;
     }
-
-    /* CATEGORY GROUPS */
-    .articles-group { margin-bottom: 2.8rem; }
-    .group-label {
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 1rem; padding-left: 2px;
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: right;
     }
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.2rem;
+    .footer-links a {
+      font-size: 0.78rem;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 500;
     }
-    .article-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.4rem;
-      text-decoration: none; color: inherit;
-      display: flex; flex-direction: column; gap: 0.9rem;
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    }
-    .article-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(79,142,247,0.1);
-    }
-    .article-tag {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.07em;
-      text-transform: uppercase; padding: 3px 9px; border-radius: 5px;
-      display: inline-block; width: fit-content;
-    }
-    .tag-tic    { background: rgba(52,199,143,0.12); color: #43c89a; }
-    .tag-tech   { background: rgba(79,142,247,0.12); color: #6ba3fa; }
-    .tag-reflect{ background: rgba(245,158,11,0.12); color: #f6a832; }
-    .tag-quant  { background: rgba(236,72,153,0.12); color: #f472b6; }
-    .tag-github { background: rgba(124,95,230,0.12); color: #a08af7; }
-    .article-title {
-      font-size: 0.97rem; font-weight: 600; line-height: 1.45;
-    }
-    .article-footer {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.75rem; color: var(--muted); margin-top: auto;
-    }
-    .read-arrow { color: var(--accent); font-size: 0.82rem; font-weight: 600; }
-
-    .posts-list { display: flex; flex-direction: column; gap: 1rem; }
-    .post-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.2rem 1.4rem;
-      text-decoration: none; color: inherit;
-      transition: border-color 0.2s;
-    }
-    .post-item:hover { border-color: var(--accent); }
-    .post-text { font-size: 0.9rem; color: var(--text); line-height: 1.65; }
-    .post-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.7rem; }
-
-    footer {
+    .footer-links a:hover { text-decoration: underline; }
+    .footer-bottom {
       border-top: 1px solid var(--border);
-      padding: 2rem;
+      padding: 1.2rem 3rem;
       text-align: center;
-      font-size: 0.8rem; color: var(--muted);
+      max-width: 1060px;
+      margin: 0 auto;
     }
-    footer a { color: var(--accent); text-decoration: none; }
+    .footer-bottom p {
+      font-size: 0.73rem;
+      color: var(--muted-light);
+    }
 
-    @media (max-width: 640px) {
-      .about-card { grid-template-columns: 1fr; }
-      .articles-grid { grid-template-columns: 1fr; }
-      nav .nav-links { display: none; }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 820px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; gap: 2.5rem; padding: 110px 1.5rem 60px; }
+      section { padding: 3rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .posts-grid { grid-template-columns: 1fr; }
+      .articles-table thead { display: none; }
+      .articles-table,
+      .articles-table tbody,
+      .articles-table tr,
+      .articles-table td { display: block; width: 100%; }
+      .article-row td {
+        padding: 0.35rem 0;
+        border: none;
+      }
+      .article-row { padding: 1rem 0; border-bottom: 1px solid var(--border); }
+      .article-row td:last-child { text-align: left; padding-top: 0.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; }
+      .footer-links { text-align: left; }
+    }
+
+    @media (max-width: 540px) {
+      .hero h1 { font-size: 2rem; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .filter-bar { gap: 5px; }
     }
   </style>
 </head>
 <body>
 
+<!-- ══ NAVIGATION ══ -->
 <nav>
-  <div class="nav-logo">Xavier Chen</div>
-  <div class="nav-links">
-    <a href="#about">About</a>
-    <a href="#articles">Articles</a>
-    <a href="#posts">Posts</a>
-    <a href="https://x.com/ChenXiaoCapital" target="_blank">X / Twitter</a>
+  <a class="nav-logo" href="#">Xavier Chen</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#articles">Insights</a>
+      <a href="#posts">Posts</a>
+    </div>
+    <a class="nav-x-btn" href="https://x.com/ChenXiaoCapital" target="_blank">&#64;ChenXiaoCapital ↗</a>
   </div>
 </nav>
 
+<!-- ══ HERO ══ -->
 <div class="hero">
-  <span class="hero-badge">Investing Research</span>
-  <h1>Xavier Chen<br/><small><a href="https://x.com/ChenXiaoCapital" target="_blank" style="text-decoration: none; color: inherit;">X: @ChenXiaoCapital</a></small></h1>
-  <p class="hero-sub">
-    Group FP&amp;A analyst in Hong Kong. Incoming Rutgers Master of Financial Analysis student (Estimated graduation 2027 May). Researching US equities, macro, and quantitative frameworks as a family fund manager.
-  </p>
-  <div class="hero-meta">
-    <span>Hong Kong and US</span>
-    <span>Equity Markets</span>
-    <span>Rutgers MFinA 2026</span>
-    <span>Python for analysis</span>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Investing Research</div>
+    <h1>Independent<br/>Investment<br/>Analysis</h1>
+    <p class="hero-sub">
+      Bottom-up equity research, macro observations, and quantitative frameworks written in real time. Based in Hong Kong, focused on US equities.
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#articles">Read Insights</a>
+      <a class="btn btn-outline" href="https://github.com/Xiaowen-CHEN-Learner/Equity-research/blob/main/Xavier%20-%20Equity%20research%20as%20of%2020260227.pdf" target="_blank">Research PDF ↗</a>
+    </div>
   </div>
-  <div class="hero-cta">
-    <a class="btn btn-primary" href="https://github.com/Xiaowen-CHEN-Learner/Equity-research/blob/main/Xavier%20-%20Equity%20research%20as%20of%2020260227.pdf" target="_blank">
-      &#9654; Read All Articles
-    </a>
-    <a class="btn btn-outline" href="https://x.com/ChenXiaoCapital" target="_blank">
-      Follow on X
-    </a>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">4.5</div>
+        <div class="hero-stat-label">Years in Finance</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">18</div>
+        <div class="hero-stat-label">Published Articles</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">MFinA</div>
+        <div class="hero-stat-label">Rutgers 2027</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">HK</div>
+        <div class="hero-stat-label">Base Location</div>
+      </div>
+    </div>
+    <div class="hero-tags-label">Focus Areas</div>
+    <div class="hero-tags">
+      <span class="hero-tag">Equity Research</span>
+      <span class="hero-tag">FP&amp;A</span>
+      <span class="hero-tag">DCF / Valuation</span>
+      <span class="hero-tag">China Macro</span>
+      <span class="hero-tag">TIC Industry</span>
+      <span class="hero-tag">Quantamental</span>
+      <span class="hero-tag">Python</span>
+      <span class="hero-tag">Tech &amp; AI</span>
+    </div>
   </div>
 </div>
 
+<div class="page-divider"></div>
+
+<!-- ══ ABOUT ══ -->
 <section id="about">
   <div class="section-header">
     <span class="section-title">About</span>
   </div>
-  <div class="about-card">
-    <div class="about-left">
+  <div class="about-grid">
+    <div class="about-body">
       <p>
-        I am a finance professional with 4.5 years across external audit, in-house accounting, and Group FP&amp;A in Hong Kong. I invest in the global market through stocks and options with a focus on bottom-up fundamental analysis, macro awareness, and systematic valuation frameworks.
+        I am a finance professional with 4.5 years of experience spanning external audit, in-house accounting, and Group FP&amp;A in Hong Kong. My investment work focuses on bottom-up fundamental analysis of US equities, supplemented by macro awareness, systematic valuation frameworks, and quantitative tools I build in Python.
       </p>
-      <br/>
       <p>
-        I am joining the Rutgers Master of Financial Analysis program in September 2026, with a goal of transitioning into an analysis role on the US East Coast. My writing on X documents my investment process, thesis construction, and market observations in real time.
+        I am joining the Rutgers Master of Financial Analysis program in September 2026, with a target graduation of May 2027 and a goal of transitioning into an equity analysis or investment role on the US East Coast. My writing on X documents my investment process, thesis construction, and market observations in real time.
+      </p>
+      <p>
+        My research spans five areas: China macro conditions, the Testing, Inspection and Certification industry, Technology and AI sector dynamics, reflections on the investing profession, and quantitative portfolio projects published on GitHub.
       </p>
     </div>
-    <div class="about-right">
-      <div class="stat-row">
-        <div class="stat">
-          <div class="stat-num">4.5</div>
-          <div class="stat-label">Years in Finance</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">MFinA</div>
-          <div class="stat-label">Rutgers</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">Equities</div>
-          <div class="stat-label">Market Focus</div>
-        </div>
+    <div class="about-sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-label">Current Role</div>
+        <div class="sidebar-value">Group FP&amp;A, Hong Kong</div>
       </div>
-      <div class="skills">
-        <span class="skill-tag">Equity Research</span>
-        <span class="skill-tag">FP&amp;A</span>
-        <span class="skill-tag">DCF / Valuation</span>
-        <span class="skill-tag">Macro Analysis</span>
-        <span class="skill-tag">Financial Modelling</span>
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">Company analysis</span>
-        <span class="skill-tag">Future reflections</span>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Education</div>
+        <div class="sidebar-value">Rutgers MFinA<br/>Sep 2026 – May 2027</div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Career Path</div>
+        <div class="sidebar-value">External Audit → In-House Accountant → Group FP&amp;A</div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Market Focus</div>
+        <div class="sidebar-value">US Equities, Options, Global Macro</div>
+      </div>
+      <div class="sidebar-block">
+        <div class="sidebar-label">Published On</div>
+        <div class="sidebar-value">X / Twitter &nbsp;·&nbsp; GitHub</div>
       </div>
     </div>
   </div>
 </section>
 
+<div class="page-divider"></div>
+
+<!-- ══ ARTICLES / INSIGHTS ══ -->
 <section id="articles">
   <div class="section-header">
-    <span class="section-title">Long-Form Articles</span>
-    <a class="section-link" href="https://x.com/ChenXiaoCapital/articles" target="_blank">View all on X &rarr;</a>
+    <span class="section-title">Insights</span>
+    <a class="section-link" href="https://x.com/ChenXiaoCapital/articles" target="_blank">All articles on X ↗</a>
   </div>
 
-  <!-- TIC -->
-  <div class="articles-group">
-    <div class="group-label">TIC Industry</div>
-    <div class="articles-grid">
-      
-      <a class="article-card" href="https://x.com/ChenXiaoCapital/status/2029402772555321568" target="_blank">
-        <span class="article-tag tag-tic">TIC</span>
-        <div class="article-title">Mistras group Q4 earning review - Mild revenue growth while worries on profit [NYSE: MG]</div>
-        <div class="article-footer">
-          <span>2026-03-05</span>
-          <span class="read-arrow">Read &rarr;</span>
-        </div>
-      </a>
-      
-      <a class="article-card" href="https://x.com/ChenXiaoCapital/status/2028701979644768639" target="_blank">
-        <span class="article-tag tag-tic">TIC</span>
-        <div class="article-title">Mistras Group Earnings Results Preview [NYSE: MG]</div>
-        <div class="article-footer">
-          <span>2026-03-03</span>
-          <span class="read-arrow">Read &rarr;</span>
-        </div>
-      </a>
-      <a class="article-card" href="https://x.com/ChenXiaoCapital/status/2024758086498734338" target="_blank">
-        <span class="article-tag tag-tic">TIC</span>
-        <div class="article-title">TIC Industry: 2026 Forward Looking</div>
-        <div class="article-footer">
-          <span>2026-02-20</span>
-          <span class="read-arrow">Read &rarr;</span>
-        </div>
-      </a>
-    </div>
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterArticles('all', this)">All</button>
+    <button class="filter-btn" onclick="filterArticles('china', this)">China Macro</button>
+    <button class="filter-btn" onclick="filterArticles('tic', this)">TIC Industry</button>
+    <button class="filter-btn" onclick="filterArticles('tech', this)">Tech &amp; AI</button>
+    <button class="filter-btn" onclick="filterArticles('reflect', this)">Investing Reflections</button>
+    <button class="filter-btn" onclick="filterArticles('quant', this)">Quantamental</button>
   </div>
 
-  <!-- TECH -->
-  <div class="articles-group">
-    <div class="group-label">Tech &amp; AI</div>
-    <div class="articles-grid">
-      <a class="article-card" href="https://x.com/ChenXiaoCapital/status/2028359728653582524" target="_blank">
-        <span class="article-tag tag-tech">Tech</span>
-        <div class="article-title">AI in Practice: The Difference of Active Learning and Passive Copy</div>
-        <div class="article-footer">
-          <span>2026-03-02</span>
-          <span class="read-arrow">Read &rarr;</span>
-        </div>
-      </a>
-      <a class="article-card" href="https://x.com/ChenXiaoCapital/status/2027265368163824110" target="_blank">
-        <span class="article-tag tag-tech">Tech</span>
-        <div class="article-title">The Reality Behind AI Replacement: Excuse from Management</div>
-        <div class="article-footer">
-          <span>2026-02-27</span>
-          <span class="read-arrow">Read &rarr;</span>
-        </div>
-      </a>
-      <a class="article-card" href="https://x.com/ChenXiaoCapital/status/2026174125325316299" target="_blank">
-        <span class="article-tag tag-tech">Tech</span>
-        <div class="article-title">AI Era: Young Man's Future Choices (After Citrini's Report)</div>
-        <div class="article-footer">
-          <span>2026-02-24</span>
-          <span class="read-arrow">Read &rarr;</span>
-        </div>
-      </a>
-      <a class="article-card" href="https://x.com/ChenXiaoCapital/status/2025860118592827749" target="_blank">
-        <span class="article-tag tag-tech">Tech</span>
-        <div class="article-title">The Future of Software Companies</div>
-        <div class="article-footer">
-          <span>2026-02-23</span>
-          <span class="read-arrow">Read &rarr;</span>
-        </div>
-      </a>
-    </div>
-  </div>
+  <table class="articles-table">
+    <thead>
+      <tr>
+        <th class="col-cat">Category</th>
+        <th>Title</th>
+        <th class="col-date">Date</th>
+        <th class="col-loc">Location</th>
+        <th class="col-plat">Platform</th>
+        <th class="col-act"></th>
+      </tr>
+    </thead>
+    <tbody id="articles-body">
 
-  <!-- INVESTING REFLECTIONS -->
-  <div class="articles-group">
-    <div class="group-label">Investing Reflections</div>
-    <div class="articles-grid">
-      <a class="article-card" href="https://x.com/ChenXiaoCapital/status/2027927948679123453" target="_blank">
-        <span class="article-tag tag-reflect">Reflection</span>
-        <div class="article-title">Expectations and Board Cycles</div>
-        <div class="article-footer">
-          <span>2026-03-01</span>
-          <span class="read-arrow">Read &rarr;</span>
-        </div>
-      </a>
-    </div>
-  </div>
+      <!-- China Macro -->
+      <tr class="article-row" data-cat="china" onclick="window.open('https://x.com/ChenXiaoCapital/status/2034193380297875580','_blank')">
+        <td><span class="cat-badge cat-china">China Macro</span></td>
+        <td><div class="article-title-cell">China Macro: Better than Expected Economic Data but Remain Wait &amp; See Amid Uncertainties</div></td>
+        <td><span class="article-date">2026-03-18</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2034193380297875580" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
 
-  <!-- QUANTAMENTAL -->
-  <div class="articles-group">
-    <div class="group-label">Quantamental Investing Projects</div>
-    <div class="articles-grid">
-      <a class="article-card" href="https://x.com/ChenXiaoCapital/status/2026534808017604727" target="_blank">
-        <span class="article-tag tag-quant">Quantamental</span>
-        <div class="article-title">Quantamental Investing: From Single Stock Performance to Factor Exposure (1)</div>
-        <div class="article-footer">
-          <span>2026-02-25</span>
-          <span class="read-arrow">Read &rarr;</span>
-        </div>
-      </a>
-      <a class="article-card" href="https://github.com/Xiaowen-CHEN-Learner/Quantitative-investing_Quantamental-approach/tree/main/Chen's%20Portfolio%20Performance" target="_blank">
-        <span class="article-tag tag-github">GitHub</span>
-        <div class="article-title">Chen's Investing Performance 2025</div>
-        <div class="article-footer">
-          <span>GitHub Repo</span>
-          <span class="read-arrow">View &rarr;</span>
-        </div>
-      </a>
-      <a class="article-card" href="https://github.com/Xiaowen-CHEN-Learner/Quantitative-investing_Quantamental-approach/tree/main/Market_Sentiment_Monitor" target="_blank">
-        <span class="article-tag tag-github">GitHub</span>
-        <div class="article-title">Market Sentiment Monitor</div>
-        <div class="article-footer">
-          <span>GitHub Repo</span>
-          <span class="read-arrow">View &rarr;</span>
-        </div>
-      </a>
-      <a class="article-card" href="https://github.com/Xiaowen-CHEN-Learner/Quantitative-investing_Quantamental-approach/tree/main/VIX_for_Index_Strengthen" target="_blank">
-        <span class="article-tag tag-github">GitHub</span>
-        <div class="article-title">VIX for Index Strengthen</div>
-        <div class="article-footer">
-          <span>GitHub Repo</span>
-          <span class="read-arrow">View &rarr;</span>
-        </div>
-      </a>
-    </div>
-  </div>
+      <!-- Investing Reflections -->
+      <tr class="article-row" data-cat="reflect" onclick="window.open('https://x.com/ChenXiaoCapital/status/2034165006955422150','_blank')">
+        <td><span class="cat-badge cat-reflect">Investing Reflections</span></td>
+        <td><div class="article-title-cell">Jobs that Appear in the Past and that Will Appear in the Future</div></td>
+        <td><span class="article-date">2026-03-18</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2034165006955422150" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
 
-</section>
+      <tr class="article-row" data-cat="reflect" onclick="window.open('https://x.com/ChenXiaoCapital/status/2032385721667903937','_blank')">
+        <td><span class="cat-badge cat-reflect">Investing Reflections</span></td>
+        <td><div class="article-title-cell">Current Status is Never Guaranteed in the Future</div></td>
+        <td><span class="article-date">2026-03-13</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2032385721667903937" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
 
-<section id="posts">
-  <div class="section-header">
-    <span class="section-title">Selected Posts on X</span>
-    <a class="section-link" href="https://x.com/ChenXiaoCapital" target="_blank">View profile &rarr;</a>
-  </div>
-  <div class="posts-list">
-    <a class="post-item" href="https://x.com/ChenXiaoCapital" target="_blank">
-      <div class="post-text">
-        In the info era, output than input, quality than quantity. Less is more.
-      </div>
-      <div class="post-meta">@ChenXiaoCapital</div>
-    </a>
-    <a class="post-item" href="https://x.com/ChenXiaoCapital" target="_blank">
-      <div class="post-text">
-        For learning, there will be an evolution as well. From taking 4 years on a subject vs rapid progress with help of AI-tutor. Higher and higher requirement for personal skills is benefitial to life-long learners.
-      </div>
-      <div class="post-meta">@ChenXiaoCapital</div>
-    </a>
-    <a class="post-item" href="https://x.com/ChenXiaoCapital" target="_blank">
-      <div class="post-text">
-        The worries most people have will more likely get a solution. Risk changes when everyone knows: gov legislation, investment change, repricing, etc. Fully discussed, solutions come. Huge risks are those you didn't even know it's a risk. AI definitely is not.
-      </div>
-      <div class="post-meta">@ChenXiaoCapital</div>
-    </a>
-    <a class="post-item" href="https://x.com/ChenXiaoCapital" target="_blank">
-      <div class="post-text">
-        Value investing in option trading: 
-        While one can use Black-Scholes model, can instead use value-investing precepts—upside potential, downside risk, and the likelihood that each of various possible scenarios will occur—to analyze these instruments. 
-        An inexpensive/overexpensive option may, in effect, have the favorable risk-return characteristics of a value investment—regardless of what the BS model dictates.
-      </div>
-      <div class="post-meta">@ChenXiaoCapital</div>
-    </a>
-  </div>
-</section>
+      <!-- Tech & AI -->
+      <tr class="article-row" data-cat="tech" onclick="window.open('https://x.com/ChenXiaoCapital/status/2031578007576428834','_blank')">
+        <td><span class="cat-badge cat-tech">Tech &amp; AI</span></td>
+        <td><div class="article-title-cell">Story of AI Infrastructure Buildout: BE, LITE, SNDK</div></td>
+        <td><span class="article-date">2026-03-11</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2031578007576428834" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
 
-<footer>
-  <p>
-    Xavier Chen &mdash; <a href="https://x.com/ChenXiaoCapital" target="_blank">@ChenXiaoCapital</a> on X
-    &nbsp;|&nbsp; Rutgers MFA 2026 &nbsp;|&nbsp; Hong Kong &rarr; US East Coast
-  </p>
-  <p style="margin-top:0.5rem;">
-    All articles &rarr; <a href="https://x.com/ChenXiaoCapital/articles" target="_blank">x.com/ChenXiaoCapital/articles</a>
-  </p>
-</footer>
+      <tr class="article-row" data-cat="tech" onclick="window.open('https://x.com/ChenXiaoCapital/status/2030878519472120185','_blank')">
+        <td><span class="cat-badge cat-tech">Tech &amp; AI</span></td>
+        <td><div class="article-title-cell">MSFT Price Target in 2027 Q1: 445, Range [371, 559]</div></td>
+        <td><span class="article-date">2026-03-09</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2030878519472120185" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
 
-</body>
-</html>
+      <!-- Investing Reflections (cont.) -->
+      <tr class="article-row" data-cat="reflect" onclick="window.open('https://x.com/ChenXiaoCapital/status/2029807943332548705','_blank')">
+        <td><span class="cat-badge cat-reflect">Investing Reflections</span></td>
+        <td><div class="article-title-cell">Shrink of Headcount in Finance: Especially Equity Research</div></td>
+        <td><span class="article-date">2026-03-06</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2029807943332548705" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <!-- TIC Industry -->
+      <tr class="article-row" data-cat="tic" onclick="window.open('https://x.com/ChenXiaoCapital/status/2029402772555321568','_blank')">
+        <td><span class="cat-badge cat-tic">TIC Industry</span></td>
+        <td><div class="article-title-cell">Mistras Group Q4 Earning Review: Mild Revenue Growth while Worries on Profit [NYSE: MG]</div></td>
+        <td><span class="article-date">2026-03-05</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2029402772555321568" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <tr class="article-row" data-cat="tic" onclick="window.open('https://x.com/ChenXiaoCapital/status/2028701979644768639','_blank')">
+        <td><span class="cat-badge cat-tic">TIC Industry</span></td>
+        <td><div class="article-title-cell">Mistras Group Earnings Results Preview [NYSE: MG]</div></td>
+        <td><span class="article-date">2026-03-03</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2028701979644768639" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <!-- Investing Reflections (cont.) -->
+      <tr class="article-row" data-cat="reflect" onclick="window.open('https://x.com/ChenXiaoCapital/status/2028359728653582524','_blank')">
+        <td><span class="cat-badge cat-reflect">Investing Reflections</span></td>
+        <td><div class="article-title-cell">AI in Practice: The Difference of Active Learning and Passive Copy</div></td>
+        <td><span class="article-date">2026-03-02</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2028359728653582524" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <tr class="article-row" data-cat="reflect" onclick="window.open('https://x.com/ChenXiaoCapital/status/2027927948679123453','_blank')">
+        <td><span class="cat-badge cat-reflect">Investing Reflections</span></td>
+        <td><div class="article-title-cell">Expectations and Board Cycles</div></td>
+        <td><span class="article-date">2026-03-01</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2027927948679123453" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <!-- Tech & AI (cont.) -->
+      <tr class="article-row" data-cat="tech" onclick="window.open('https://x.com/ChenXiaoCapital/status/2027265368163824110','_blank')">
+        <td><span class="cat-badge cat-tech">Tech &amp; AI</span></td>
+        <td><div class="article-title-cell">The Reality Behind AI Replacement: Excuse from Management</div></td>
+        <td><span class="article-date">2026-02-27</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2027265368163824110" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <!-- Quantamental -->
+      <tr class="article-row" data-cat="quant" onclick="window.open('https://x.com/ChenXiaoCapital/status/2026534808017604727','_blank')">
+        <td><span class="cat-badge cat-quant">Quantamental</span></td>
+        <td><div class="article-title-cell">Quantamental Investing: From Single Stock Performance to Factor Exposure (1)</div></td>
+        <td><span class="article-date">2026-02-25</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2026534808017604727" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <!-- Tech & AI (cont.) -->
+      <tr class="article-row" data-cat="tech" onclick="window.open('https://x.com/ChenXiaoCapital/status/2026174125325316299','_blank')">
+        <td><span class="cat-badge cat-tech">Tech &amp; AI</span></td>
+        <td><div class="article-title-cell">AI Era: Young Man's Future Choices (After Citrini's Report)</div></td>
+        <td><span class="article-date">2026-02-24</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2026174125325316299" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <tr class="article-row" data-cat="tech" onclick="window.open('https://x.com/ChenXiaoCapital/status/2025860118592827749','_blank')">
+        <td><span class="cat-badge cat-tech">Tech &amp; AI</span></td>
+        <td><div class="article-title-cell">The Future of Software Companies</div></td>
+        <td><span class="article-date">2026-02-23</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2025860118592827749" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <!-- TIC (cont.) -->
+      <tr class="article-row" data-cat="tic" onclick="window.open('https://x.com/ChenXiaoCapital/status/2024758086498734338','_blank')">
+        <td><span class="cat-badge cat-tic">TIC Industry</span></td>
+        <td><div class="article-title-cell">TIC Industry: 2026 Forward Looking</div></td>
+        <td><span class="article-date">2026-02-20</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">X</span></td>
+        <td><a class="read-btn" href="https://x.com/ChenXiaoCapital/status/2024758086498734338" target="_blank" onclick="event.stopPropagation()">Read <span class="arrow">→</span></a></td>
+      </tr>
+
+      <!-- GitHub / Quantamental Projects -->
+      <tr class="article-row" data-cat="quant" onclick="window.open('https://github.com/Xiaowen-CHEN-Learner/Quantitative-investing_Quantamental-approach/tree/main/Chen\'s%20Portfolio%20Performance','_blank')">
+        <td><span class="cat-badge cat-quant">Quantamental</span></td>
+        <td><div class="article-title-cell">Chen's Portfolio 2025 Performance</div></td>
+        <td><span class="article-date">—</span></td>
+        <td><span class="article-loc">Hong Kong</span></td>
+        <td><span class="platform-badge">GitHub</span></td>
